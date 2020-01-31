@@ -2,6 +2,7 @@ package com.blackfriday.api.DAOs;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import javax.inject.Inject;
 import com.blackfriday.api.data.models.UserModel;
 import com.blackfriday.api.database.Database;
 
-import api.IUserDAO;
+import DAOs.IUserDAO;
 import database.IDatabase;
 
 public class UserDAO implements IUserDAO<UserModel>  {
@@ -59,7 +60,20 @@ public class UserDAO implements IUserDAO<UserModel>  {
 	@Override
 	public UserModel processObject(ResultSet rs) {
 		// TODO Auto-generated method stub
-		return null;
+		UserModel user = new UserModel();
+		
+		try {
+			user.setId(rs.getInt("id"));
+			user.setUsername(rs.getString("username"));
+			user.setEmail(rs.getString("email"));
+			user.setImage(rs.getString("image"));
+			user.setRole(rs.getString("role"));
+			user.setPassword(rs.getString("password"));
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
+		
+		return user;
 	}
 
 	@Override
@@ -77,7 +91,23 @@ public class UserDAO implements IUserDAO<UserModel>  {
 	@Override
 	public UserModel getUserByUsername(String username) {
 		// TODO Auto-generated method stub
-		return null;
+		String queryUserSelecter = QueryEnums.SELECT.toString() + " id, username, email, role, image, password FROM user WHERE username = " +  "'" + username + "'";
+		UserModel foundUser = null;
+		
+		try {
+			Statement stmnt = this.database.createStatement();
+			ResultSet result = stmnt.executeQuery(queryUserSelecter);
+			
+			if(result.next()) {
+				foundUser = this.processObject(result);
+			}
+			
+			return foundUser;
+		} catch(Exception ex) {
+			System.out.println(ex);
+		}
+		
+		return foundUser;
 	}
 
 	@Override

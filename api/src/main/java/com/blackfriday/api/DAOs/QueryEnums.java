@@ -2,6 +2,7 @@ package com.blackfriday.api.DAOs;
 
 public enum QueryEnums {
 	INSERT_INTO("INSERT INTO"),
+	SELECT("SELECT"),
 	TABLE_USER("user");
 	
 	

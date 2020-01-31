@@ -3,6 +3,7 @@ package com.blackfriday.api.data.models;
 import java.util.List;
 
 public class UserModel {
+	private int id;
 	private String username;
 	private String email;
 	private String password;
@@ -56,5 +57,13 @@ public class UserModel {
 
 	public void setOrders(List<ProductModel> orders) {
 		this.orders = orders;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

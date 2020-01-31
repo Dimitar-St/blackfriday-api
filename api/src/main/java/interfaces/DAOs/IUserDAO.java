@@ -1,4 +1,4 @@
-package api;
+package DAOs;
 
 import com.blackfriday.api.data.models.UserModel;
 

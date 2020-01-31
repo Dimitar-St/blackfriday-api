@@ -1,4 +1,4 @@
-package api;
+package DAOs;
 
 import java.sql.ResultSet;
 import java.util.List;

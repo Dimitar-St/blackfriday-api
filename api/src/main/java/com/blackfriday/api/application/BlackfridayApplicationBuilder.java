@@ -4,13 +4,15 @@ import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 import com.blackfriday.api.DAOs.UserDAO;
 import com.blackfriday.api.database.Database;
+import com.blackfriday.api.password.utils.PasswordEncryptionAndDecryptionGenerater;
 import com.blackfriday.api.services.UserService;
 
-import api.IUserDAO;
+import DAOs.IUserDAO;
 import database.IDatabase;
+import passwordgenerater.IPasswordEncryptionAndDecryptionGenerater;
 import services.IUserService;
 
-public class BlackfridayApplicationBiulder extends AbstractBinder {
+public class BlackfridayApplicationBuilder extends AbstractBinder {
 
 	@Override
 	protected void configure() {
@@ -18,6 +20,7 @@ public class BlackfridayApplicationBiulder extends AbstractBinder {
 		bind(UserService.class).to(IUserService.class);
 		bind(UserDAO.class).to(IUserDAO.class);
 		bind(Database.class).to(IDatabase.class);
+		bind(PasswordEncryptionAndDecryptionGenerater.class).to(IPasswordEncryptionAndDecryptionGenerater.class);
 	}
 
 }
