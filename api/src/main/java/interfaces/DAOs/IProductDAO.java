@@ -6,4 +6,6 @@ import com.blackfriday.api.data.models.ProductModel;
 
 public interface IProductDAO<T> extends DAO<T> {
 	List<ProductModel> getProductsBy(String property, String value);
+	
+	boolean removeProduct(String id);
 }

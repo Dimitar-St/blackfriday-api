@@ -80,7 +80,7 @@ public class UserDAO implements IUserDAO<UserModel>  {
 
 	@Override
 	public UserModel getUserBy(String property, String value) {
-		String queryUserSelecter = QueryEnums.SELECT.toString() + " id, username, email, role, image, password FROM user WHERE "+ property + " = " + "'" + value + "'";
+		String queryUserSelecter = QueryEnums.SELECT.toString() + " id, username, email, role, image FROM user WHERE "+ property + " = " + "'" + value + "'";
 		UserModel foundUser = null;
 		
 		try {

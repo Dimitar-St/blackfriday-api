@@ -113,7 +113,9 @@ public class ProductDAO implements IProductDAO<ProductModel> {
 			
 			while(result.next()) {
 				ProductModel product = this.processObject(result);
-				foundProducts.add(product);
+				if(product.isDeleted() == false) {
+					foundProducts.add(product);
+				}
 			}
 			
 			return foundProducts;
@@ -123,5 +125,13 @@ public class ProductDAO implements IProductDAO<ProductModel> {
 		
 		return null;
 	}
+
+	@Override
+	public boolean removeProduct(String id) {
+		
+		return false;
+	}
+	
+	
 
 }
