@@ -9,6 +9,7 @@ public class UserModel {
 	private String password;
 	private String image;
 	private String role;
+	private int card;
 	private List<ProductModel> orders;
 	
 	public String getUsername() {
@@ -65,5 +66,13 @@ public class UserModel {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getCard() {
+		return card;
+	}
+
+	public void setCard(int card) {
+		this.card = card;
 	}
 }

@@ -2,14 +2,12 @@ package com.blackfriday.api.DAOs;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import com.blackfriday.api.data.models.UserModel;
-import com.blackfriday.api.database.Database;
 
 import DAOs.IUserDAO;
 import database.IDatabase;
@@ -41,8 +39,6 @@ public class UserDAO implements IUserDAO<UserModel>  {
 		String createUserQuery = QueryEnums.INSERT_INTO.toString() + " " + QueryEnums.TABLE_USER.toString()
 								 + "(username, password, email, image, role) VALUES " 
 								 + username + password + email + image + role;
-		
-		System.out.println(createUserQuery);
 		
 		try {
 			Statement statement = this.database.createStatement();
@@ -83,15 +79,8 @@ public class UserDAO implements IUserDAO<UserModel>  {
 	}
 
 	@Override
-	public UserModel getUserByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public UserModel getUserByUsername(String username) {
-		// TODO Auto-generated method stub
-		String queryUserSelecter = QueryEnums.SELECT.toString() + " id, username, email, role, image, password FROM user WHERE username = " +  "'" + username + "'";
+	public UserModel getUserBy(String property, String value) {
+		String queryUserSelecter = QueryEnums.SELECT.toString() + " id, username, email, role, image, password FROM user WHERE "+ property + " = " + "'" + value + "'";
 		UserModel foundUser = null;
 		
 		try {
@@ -109,18 +98,4 @@ public class UserDAO implements IUserDAO<UserModel>  {
 		
 		return foundUser;
 	}
-
-	@Override
-	public void updateUsername(String newUsername) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updatePassword(String newPassword) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
 }

@@ -12,6 +12,7 @@ import services.IUserService;
 public class UserService implements IUserService {
 		private IUserDAO userDao;
 		private IPasswordEncryptionAndDecryptionGenerater securePasswordGenerater;
+		private final String secret = "123456";
 
 		@Inject
 		public UserService(IUserDAO userDao, IPasswordEncryptionAndDecryptionGenerater securePasswordGenerater) {
@@ -20,8 +21,7 @@ public class UserService implements IUserService {
 		}
 		
 		public String register(UserModel user) {
-			//TODO: Password encryption and decryption
-			String passEncryption = this.securePasswordGenerater.encrypt(user.getPassword(), "123456");
+			String passEncryption = this.securePasswordGenerater.encrypt(user.getPassword(), secret);
 			
 			user.setPassword(passEncryption);
 			
@@ -32,11 +32,11 @@ public class UserService implements IUserService {
 		}
 		
 		public UserModel login(UserModel userToLogIn) {
-			UserModel foundUser = this.userDao.getUserByUsername(userToLogIn.getUsername());
+			UserModel foundUser = this.userDao.getUserBy("username", userToLogIn.getUsername());
 			
 			String passedPassword = userToLogIn.getPassword();
 			
-			String decryptedPassword = this.securePasswordGenerater.decrypt(foundUser.getPassword(), "123456");
+			String decryptedPassword = this.securePasswordGenerater.decrypt(foundUser.getPassword(), secret);
 			
 			
 			if(passedPassword.equals(decryptedPassword)) {
