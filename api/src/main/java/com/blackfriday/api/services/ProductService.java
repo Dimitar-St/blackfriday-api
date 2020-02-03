@@ -3,56 +3,89 @@ package com.blackfriday.api.services;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
 import com.blackfriday.api.data.models.ProductModel;
 
-import DAOs.IProductDAO;
+import database.IDatabase;
 import services.IProductService;
 
 public class ProductService implements IProductService {
 	
-	private IProductDAO productDao;
+	private IDatabase database;
 
 	@Inject
-	public ProductService(IProductDAO productDao) {
-		this.productDao = productDao;
+	public ProductService(IDatabase database) {
+		this.database = database;
 	}
 
 	@Override
 	public List<ProductModel> getAll() {
-		List<ProductModel> products = this.productDao.getAll();
+		EntityManager entityManager = this.database.createEntityManager();
+		entityManager.getTransaction().begin();
 		
-		System.out.println(products.get(0).getName());
+		List<ProductModel> products = entityManager.createQuery("from ProductModel", ProductModel.class).getResultList();
+		
+		for ( ProductModel event : products ) {
+			System.out.println( event );
+		}
+		
+		entityManager.getTransaction().commit();
 		
 		return products;
+	}
+	
+	@Override
+	public ProductModel getProduct(int id) {
+		EntityManager entityManager = this.database.createEntityManager();
+		entityManager.getTransaction().begin();
+		
+		ProductModel product = (ProductModel) entityManager.createQuery("SELECT p FROM ProductModel p WHERE p.id LIKE :id")
+														   .setParameter("id", id)
+														   .getResultList().get(0);
+		
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		
+		return product;
 	}
 
 	@Override
 	public String addAProduct(ProductModel product) {
-		boolean isSuccessfullyAdded = this.productDao.create(product);
-		String message = isSuccessfullyAdded ? "The product was added successfully" : "Ops! Something got wrong!";
+		EntityManager entityManager = this.database.createEntityManager();
+		entityManager.getTransaction().begin();
+		
+		entityManager.persist(product);
+		
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		
+		String message = "The product was added successfully" ;
 		
 		
 		return message;
 	}
 
 	@Override
-	public String removeAProduct(ProductModel product) {
+	public String removeAProduct(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		EntityManager entityManager = this.database.createEntityManager();
+		entityManager.getTransaction().begin();
+		
+		entityManager.createQuery("UPDATE ProductModel p SET p.isDeleted = true WHERE p.id LIKE :id").setParameter("id", id).executeUpdate();
+		
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		
+		String message = "Succesfully deleted";
+		
+		return message;
 	}
 
 	@Override
 	public String modifyAProduct(ProductModel product) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public List<ProductModel> getProductsBy(String property, String value) {
-		List<ProductModel> products = this.productDao.getProductsBy(property, value);
-		
-		return products;
 	}
 
 }

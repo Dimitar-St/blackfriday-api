@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -26,7 +27,6 @@ public class ProductResources {
 	}
 	
 	@GET
-	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<ProductModel> getAll() {
 		List<ProductModel> products = this.productService.getAll();
@@ -35,7 +35,6 @@ public class ProductResources {
 	}
 	
 	@POST
-	@Path("/add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String addProduct(ProductModel product) {
@@ -45,20 +44,21 @@ public class ProductResources {
 	}
 	
 	@GET
-	@Path("/all/{name}")
+	@Path("{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<ProductModel> getProductByName(@PathParam("name") String nameValue ) {
-		List<ProductModel> foundProductsByName = this.productService.getProductsBy("name", nameValue);
+	public ProductModel getProduct(@PathParam("id") int id) {
+		ProductModel foundProduct = this.productService.getProduct(id);
 		
-		return foundProductsByName;
+		return foundProduct;
 	}
 	
-	@GET
-	@Path("/category/{category}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<ProductModel> getProductByCategory(@PathParam("category") String categoryValue ) {
-		List<ProductModel> foundProductsByCategory = this.productService.getProductsBy("category", categoryValue);
+	@DELETE
+	@Path("/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String removeProduct(@PathParam("id") int id) {
+		String message = this.productService.removeAProduct(id);
 		
-		return foundProductsByCategory;
+		return message;
 	}
 }

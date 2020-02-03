@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="api">
+		<class>com.blackfriday.api.data.models.ProductModel</class>
+		<class>com.blackfriday.api.data.models.UserModel</class>
+		<class>com.blackfriday.api.data.models.BoughtProducts</class>
+	
+		 <properties>
+           	<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sap_black_friday" />
+            <property name="javax.persistence.jdbc.user" value="root" />
+            <property name="javax.persistence.jdbc.password" value="mypass" />  
+            <property name="hibernate.show_sql" value="true" />
+            
+            <!-- For creating database tables -->
+            <!--<property name="hibernate.hbm2ddl.auto" value="create"></property>-->
+        </properties>
+		
+	</persistence-unit>
+</persistence>

@@ -1,22 +1,22 @@
 package com.blackfriday.api.services;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
-import com.blackfriday.api.DAOs.UserDAO;
 import com.blackfriday.api.data.models.UserModel;
 
-import DAOs.IUserDAO;
+import database.IDatabase;
 import passwordgenerater.IPasswordEncryptionAndDecryptionGenerater;
 import services.IUserService;
 
 public class UserService implements IUserService {
-		private IUserDAO userDao;
 		private IPasswordEncryptionAndDecryptionGenerater securePasswordGenerater;
 		private final String secret = "123456";
+		private IDatabase database;
 
 		@Inject
-		public UserService(IUserDAO userDao, IPasswordEncryptionAndDecryptionGenerater securePasswordGenerater) {
-			this.userDao = userDao;
+		public UserService(IDatabase database, IPasswordEncryptionAndDecryptionGenerater securePasswordGenerater) {
+			this.database = database;
 			this.securePasswordGenerater = securePasswordGenerater;
 		}
 		
@@ -25,14 +25,29 @@ public class UserService implements IUserService {
 			
 			user.setPassword(passEncryption);
 			
-			boolean successfullyCreated = this.userDao.create(user);
-			String message = successfullyCreated ? "You registerd successfully!" : "Oops! Something went wrong!";
+			EntityManager entityManager = this.database.createEntityManager();
+			entityManager.getTransaction().begin();
+			
+			entityManager.persist(user);
+			
+			
+			entityManager.getTransaction().commit();
+			entityManager.close();
+			
+			String message = "You registerd successfully!";//: "Oops! Something went wrong!";
 			
 			return message;
 		}
 		
 		public UserModel login(UserModel userToLogIn) {
-			UserModel foundUser = this.userDao.getUserBy("username", userToLogIn.getUsername());
+			
+			EntityManager entityManager = this.database.createEntityManager();
+			entityManager.getTransaction().begin();
+			
+			UserModel foundUser = (UserModel) entityManager.createQuery("SELECT u FROM UserModel u WHERE u.username LIKE :username")
+						 								   .setParameter("username", userToLogIn.getUsername())
+						 								   .getSingleResult();
+			
 			
 			String passedPassword = userToLogIn.getPassword();
 			

@@ -2,8 +2,8 @@ package database;
 
 import java.sql.Connection;
 
+import javax.persistence.EntityManager;
+
 public interface IDatabase {
-	public Connection getConnection();
-	
-	public void close();
+	EntityManager createEntityManager();
 }

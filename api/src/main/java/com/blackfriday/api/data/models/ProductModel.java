@@ -1,31 +1,57 @@
 package com.blackfriday.api.data.models;
 
-public class ProductModel extends Deletable {
-	private int id; 
-	private String name;
-	private String category;
+import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.NaturalIdCache;
+
+@Entity
+@Table(name = "products")
+@NaturalIdCache
+public class ProductModel {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	@NaturalId
+    private String name;
+	
 	private String manufacturer;
 	private String image;
-	private String description; 
-	private int price;
+	private String description;
+	private int minPrice;
+	private int regularPrice;
 	private int promotion;
-	private int user_id;
+	private boolean isDeleted;
 	private int quantity;
+
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<BoughtProducts> orders;
+
+	public ProductModel() {}
+
+	public ProductModel(String name) {
+		this.name = name;
+	}
 	
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
 	}
 
 	public String getManufacturer() {
@@ -52,22 +78,6 @@ public class ProductModel extends Deletable {
 		this.id = id;
 	}
 
-	public int getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
-	}
-
 	public int getPromotion() {
 		return promotion;
 	}
@@ -90,5 +100,52 @@ public class ProductModel extends Deletable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getRegularPrice() {
+		return regularPrice;
+	}
+
+	public void setRegularPrice(int regularPrice) {
+		this.regularPrice = regularPrice;
+	}
+
+	public int getMinPrice() {
+		return minPrice;
+	}
+
+	public void setMinPrice(int minPrice) {
+		this.minPrice = minPrice;
+	}
+
+	public boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		ProductModel model = (ProductModel) o;
+		return Objects.equals(name, model.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
+	}
+
+	public List<BoughtProducts> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<BoughtProducts> orders) {
+		this.orders = orders;
 	}
 }

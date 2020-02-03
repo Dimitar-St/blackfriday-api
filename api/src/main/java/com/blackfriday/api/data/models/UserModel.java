@@ -1,21 +1,38 @@
 package com.blackfriday.api.data.models;
 
 import java.util.List;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "users")
 public class UserModel {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
 	private String username;
 	private String email;
 	private String password;
 	private String image;
 	private String role;
 	private int card;
-	private List<ProductModel> orders;
-	
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<BoughtProducts> orders;
+
 	public String getUsername() {
 		return username;
 	}
-	
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -52,11 +69,11 @@ public class UserModel {
 		this.role = role;
 	}
 
-	public List<ProductModel> getOrders() {
+	public List<BoughtProducts> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(List<ProductModel> orders) {
+	public void setOrders(List<BoughtProducts> orders) {
 		this.orders = orders;
 	}
 
@@ -75,4 +92,20 @@ public class UserModel {
 	public void setCard(int card) {
 		this.card = card;
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+ 
+        if (o == null || getClass() != o.getClass())
+            return false;
+ 
+        UserModel model = (UserModel) o;
+        return Objects.equals(username, model.username);
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(username);
+    }
 }

@@ -12,7 +12,7 @@ import com.blackfriday.api.data.models.UserModel;
 import passwordgenerater.IPasswordEncryptionAndDecryptionGenerater;
 import services.IUserService;
 
-@Path("user")
+@Path("users")
 public class UserResource {
 	private IUserService userService;
 
@@ -23,7 +23,6 @@ public class UserResource {
 	}
 	
 	@POST
-	@Path("/register")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String register(UserModel user) {	
 		String isCreated = this.userService.register(user);
@@ -32,7 +31,7 @@ public class UserResource {
 	}
 	
 	@POST
-	@Path("/login")
+	@Path("/auth")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public UserModel login(UserModel userToLogIn) {

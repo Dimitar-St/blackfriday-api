@@ -2,15 +2,11 @@ package com.blackfriday.api.application;
 
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
-import com.blackfriday.api.DAOs.ProductDAO;
-import com.blackfriday.api.DAOs.UserDAO;
 import com.blackfriday.api.database.Database;
 import com.blackfriday.api.password.utils.PasswordEncryptionAndDecryptionGenerater;
 import com.blackfriday.api.services.ProductService;
 import com.blackfriday.api.services.UserService;
 
-import DAOs.IProductDAO;
-import DAOs.IUserDAO;
 import database.IDatabase;
 import passwordgenerater.IPasswordEncryptionAndDecryptionGenerater;
 import services.IProductService;
@@ -29,10 +25,6 @@ public class BlackfridayApplicationBuilder extends AbstractBinder {
 		
 		//Utils
 		bind(PasswordEncryptionAndDecryptionGenerater.class).to(IPasswordEncryptionAndDecryptionGenerater.class);
-		
-		// DAOs
-		bind(UserDAO.class).to(IUserDAO.class);
-		bind(ProductDAO.class).to(IProductDAO.class);
 	}
 
 }
