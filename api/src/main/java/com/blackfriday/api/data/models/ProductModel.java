@@ -18,14 +18,12 @@ import org.hibernate.annotations.NaturalIdCache;
 
 @Entity
 @Table(name = "products")
-@NaturalIdCache
 public class ProductModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@NaturalId
     private String name;
 	
 	private String manufacturer;
@@ -37,7 +35,7 @@ public class ProductModel {
 	private boolean isDeleted;
 	private int quantity;
 
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<BoughtProducts> orders;
 
 	public ProductModel() {}

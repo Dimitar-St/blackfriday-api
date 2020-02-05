@@ -3,29 +3,25 @@ package com.blackfriday.api.data.models;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="bought_products")
 public class BoughtProducts {
 	
-	@EmbeddedId
-    private BoughtProductsId id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("productId")
+	@ManyToOne
 	private ProductModel product;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("userId")
+	@ManyToOne
 	private UserModel user;
 	
 	@Column(name = "created_on")
@@ -36,16 +32,15 @@ public class BoughtProducts {
 	public BoughtProducts(UserModel user, ProductModel product) {
 		this.product = product;
 		this.user = user;
-		this.id = new BoughtProductsId(product.getId(), user.getId());
 	}
 
 	
-	public BoughtProductsId getId() {
+	public int getId() {
 		return id;
 	}
 
 
-	public void setId(BoughtProductsId id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

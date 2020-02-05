@@ -3,8 +3,9 @@ package com.blackfriday.api.application;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 import com.blackfriday.api.database.Database;
-import com.blackfriday.api.password.utils.PasswordEncryptionAndDecryptionGenerater;
+import com.blackfriday.api.services.PasswordEncryptionAndDecryptionGenerater;
 import com.blackfriday.api.services.ProductService;
+import com.blackfriday.api.services.SecurityToken;
 import com.blackfriday.api.services.UserService;
 
 import database.IDatabase;
@@ -25,6 +26,8 @@ public class BlackfridayApplicationBuilder extends AbstractBinder {
 		
 		//Utils
 		bind(PasswordEncryptionAndDecryptionGenerater.class).to(IPasswordEncryptionAndDecryptionGenerater.class);
+		
+		
 	}
 
 }

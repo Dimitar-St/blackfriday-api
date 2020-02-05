@@ -26,8 +26,12 @@ public class ProductService implements IProductService {
 		
 		List<ProductModel> products = entityManager.createQuery("from ProductModel", ProductModel.class).getResultList();
 		
-		for ( ProductModel event : products ) {
-			System.out.println( event );
+		for(int i = 0; i < products.size(); i++) {
+			ProductModel product = products.get(i);
+			
+			if(product.getIsDeleted() == true) {
+				products.remove(i);
+			}
 		}
 		
 		entityManager.getTransaction().commit();
@@ -45,7 +49,6 @@ public class ProductService implements IProductService {
 														   .getResultList().get(0);
 		
 		entityManager.getTransaction().commit();
-		entityManager.close();
 		
 		return product;
 	}
@@ -58,8 +61,6 @@ public class ProductService implements IProductService {
 		entityManager.persist(product);
 		
 		entityManager.getTransaction().commit();
-		entityManager.close();
-		
 		String message = "The product was added successfully" ;
 		
 		
@@ -75,7 +76,6 @@ public class ProductService implements IProductService {
 		entityManager.createQuery("UPDATE ProductModel p SET p.isDeleted = true WHERE p.id LIKE :id").setParameter("id", id).executeUpdate();
 		
 		entityManager.getTransaction().commit();
-		entityManager.close();
 		
 		String message = "Succesfully deleted";
 		

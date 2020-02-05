@@ -12,12 +12,12 @@ import services.IUserService;
 public class UserService implements IUserService {
 		private IPasswordEncryptionAndDecryptionGenerater securePasswordGenerater;
 		private final String secret = "123456";
-		private IDatabase database;
+		private EntityManager entityManager;
 
 		@Inject
 		public UserService(IDatabase database, IPasswordEncryptionAndDecryptionGenerater securePasswordGenerater) {
-			this.database = database;
 			this.securePasswordGenerater = securePasswordGenerater;
+			this.entityManager = database.createEntityManager();
 		}
 		
 		public String register(UserModel user) {
@@ -25,14 +25,12 @@ public class UserService implements IUserService {
 			
 			user.setPassword(passEncryption);
 			
-			EntityManager entityManager = this.database.createEntityManager();
 			entityManager.getTransaction().begin();
 			
 			entityManager.persist(user);
 			
 			
 			entityManager.getTransaction().commit();
-			entityManager.close();
 			
 			String message = "You registerd successfully!";//: "Oops! Something went wrong!";
 			
@@ -41,7 +39,6 @@ public class UserService implements IUserService {
 		
 		public UserModel login(UserModel userToLogIn) {
 			
-			EntityManager entityManager = this.database.createEntityManager();
 			entityManager.getTransaction().begin();
 			
 			UserModel foundUser = (UserModel) entityManager.createQuery("SELECT u FROM UserModel u WHERE u.username LIKE :username")
@@ -53,13 +50,40 @@ public class UserService implements IUserService {
 			
 			String decryptedPassword = this.securePasswordGenerater.decrypt(foundUser.getPassword(), secret);
 			
-			
 			if(passedPassword.equals(decryptedPassword)) {
+				
+				try {
+					String jsonToken = SecurityToken.generateJwtToken(String.valueOf(foundUser.getId()));
+	
+					updateUserToken(foundUser.getId(), jsonToken);
+				} catch(Exception e) {
+					System.out.println("Log in excpetion: " + e.getMessage());
+				}
+				
+				foundUser.setPassword(decryptedPassword);
+				
+				
 				return foundUser;
 			} 	
 			
 			return null;		
 		}
 		
+		public UserModel getUserById(int id) {
+			UserModel foundUser = (UserModel) entityManager.createQuery("SELECT u FROM UserModel u WHERE u.id LIKE :id")
+						 								   .setParameter("id", id)
+						 								   .getSingleResult();
+			
+			return foundUser;
+		}
 		
+		private void updateUserToken(int id, String token) {
+			UserModel user = entityManager.find(UserModel.class, id);
+			
+			
+			user.setToken(token);
+			
+			entityManager.getTransaction().commit();
+			entityManager.close();
+		}
 }

@@ -6,4 +6,6 @@ public interface IUserService {
 	String register(UserModel user);
 	
 	UserModel login(UserModel userToLogIn);
+	
+	UserModel getUserById(int id);
 }

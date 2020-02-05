@@ -5,13 +5,17 @@ import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 @Entity
+@DynamicUpdate
 @Table(name = "users")
 public class UserModel {
 
@@ -24,9 +28,10 @@ public class UserModel {
 	private String password;
 	private String image;
 	private String role;
+	private String token;
 	private int card;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
 	private List<BoughtProducts> orders;
 
 	public String getUsername() {
@@ -108,4 +113,13 @@ public class UserModel {
     public int hashCode() {
         return Objects.hash(username);
     }
+
+	public String getToken() {
+		return token;
+	}
+
+	
+	public void setToken(String token) {
+		this.token = token;
+	}
 }

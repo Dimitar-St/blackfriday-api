@@ -1,4 +1,4 @@
-package com.blackfriday.api.password.utils;
+package com.blackfriday.api.services;
 
 import java.io.UnsupportedEncodingException;
 import java.security.AlgorithmParameters;
