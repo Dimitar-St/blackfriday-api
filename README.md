@@ -42,3 +42,55 @@ In persistence.xml file you need to change the properties for user and password 
 ~~~
 
 
+## Routes 
+
+| Route| Verb| Access|
+| --- | --- | --- |
+|http://localhost:YOUR_PORT/api/webapi/products| GET - returns all products| None|
+|http://localhost:YOUR_PORT/api/webapi/products/{id}| GET - returns one product with provided id| None |
+|http://localhost:YOUR_PORT/api/webapi/products| POST - adds a new product | signed in as Employee |
+|http://localhost:YOUR_PORT/api/webapi/products/{id}|DELETE - deletes a products|signed in as Employee|
+|http://localhost:YOUR_PORT/api/webapi/users|POST - register user|None|
+|http://localhost:YOUR_PORT/api/webapi/user/auth|POST - log in user|None|
+
+
+'NOTE:' Postman was used to make requests to this routes. If you have trouble accessing the authrized routes make sure that you are logged in as an employee and copy and passed the provided token into the 'Authorization' tab(as a type choose 'Bearer Token')
+
+#### Example product that can be added
+~~~json
+    {
+        "description": "no desciprtion",
+        "image": "no image",
+        "isDeleted": false,
+        "manufacturer": "Nike",
+        "name": "Super cool shoes",
+        "minPrice": 20,
+        "promotion": 0,
+        "quantity": 20,
+        "regularPrice": 25
+    }
+~~~
+
+#### Example user info that can be registered
+
+~~~json
+   {
+	 "username": "anastas",
+	 "password": "123456",
+     "role": "employee",
+     "image": "no image",
+     "email": "myemail@gmail.com"
+   }
+~~~
+
+#### Example user info that can be logged in
+
+~~~json
+   {
+	 "username": "anastas",
+	 "password": "123456",
+     "role": "employee"
+   }
+~~~
+
+
