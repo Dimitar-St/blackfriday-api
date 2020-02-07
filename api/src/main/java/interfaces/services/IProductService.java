@@ -2,6 +2,8 @@ package services;
 
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+
 import com.blackfriday.api.data.models.ProductModel;
 
 public interface IProductService {
@@ -9,7 +11,7 @@ public interface IProductService {
 
 	ProductModel getProduct(int id);
 
-	String addAProduct(ProductModel product);
+	Response addAProduct(ProductModel product);
 
 	String removeAProduct(int id);
 

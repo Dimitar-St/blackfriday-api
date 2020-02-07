@@ -1,8 +1,12 @@
 package com.blackfriday.api.services;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.ws.rs.core.Response;
 
+import com.blackfriday.api.DTOs.Token;
 import com.blackfriday.api.data.models.UserModel;
 
 import database.IDatabase;
@@ -10,18 +14,29 @@ import passwordgenerater.IPasswordEncryptionAndDecryptionGenerater;
 import services.IUserService;
 
 public class UserService implements IUserService {
-		private IPasswordEncryptionAndDecryptionGenerater securePasswordGenerater;
+		private IPasswordEncryptionAndDecryptionGenerater securePasswordGenerator;
 		private final String secret = "123456";
 		private EntityManager entityManager;
+		
+		private static final String USER_ALREADY_EXISTS = "User with that username alredy exists";
+		private static final String REGISTERED_SUCCESSFULLY = "You registerd successfully!";
+		private static final String WRONG_PASSWORD = "The entered password is incorrect!";
 
 		@Inject
-		public UserService(IDatabase database, IPasswordEncryptionAndDecryptionGenerater securePasswordGenerater) {
-			this.securePasswordGenerater = securePasswordGenerater;
+		public UserService(IDatabase database, IPasswordEncryptionAndDecryptionGenerater securePasswordGenerator) {
+			this.securePasswordGenerator = securePasswordGenerator;
 			this.entityManager = database.createEntityManager();
 		}
 		
-		public String register(UserModel user) {
-			String passEncryption = this.securePasswordGenerater.encrypt(user.getPassword(), secret);
+		public Response register(UserModel user) {
+			int foundUsers = checkIfUserExists(user.getUsername());
+			
+			if(foundUsers > 0) {
+				return Response.status(Response.Status.CREATED).entity(USER_ALREADY_EXISTS).build();
+			}
+			
+			
+			String passEncryption = this.securePasswordGenerator.encrypt(user.getPassword(), secret);
 			
 			user.setPassword(passEncryption);
 			
@@ -32,13 +47,10 @@ public class UserService implements IUserService {
 			
 			entityManager.getTransaction().commit();
 			
-			String message = "You registerd successfully!";//: "Oops! Something went wrong!";
-			
-			return message;
+			return Response.ok(REGISTERED_SUCCESSFULLY).build();
 		}
 		
-		public UserModel login(UserModel userToLogIn) {
-			
+		public Response login(UserModel userToLogIn) {
 			entityManager.getTransaction().begin();
 			
 			UserModel foundUser = (UserModel) entityManager.createQuery("SELECT u FROM UserModel u WHERE u.username LIKE :username")
@@ -48,38 +60,62 @@ public class UserService implements IUserService {
 			
 			String passedPassword = userToLogIn.getPassword();
 			
-			String decryptedPassword = this.securePasswordGenerater.decrypt(foundUser.getPassword(), secret);
+			String decryptedPassword = this.securePasswordGenerator.decrypt(foundUser.getPassword(), secret);
+			
+			String jsonToken = null;
 			
 			if(passedPassword.equals(decryptedPassword)) {
 				
 				try {
-					String jsonToken = SecurityToken.generateJwtToken(String.valueOf(foundUser.getId()));
+					jsonToken = SecurityToken.generateJwtToken(String.valueOf(foundUser.getId()));
 	
 					updateUserToken(foundUser.getId(), jsonToken);
 				} catch(Exception e) {
 					System.out.println("Log in excpetion: " + e.getMessage());
 				}
 				
-				foundUser.setPassword(decryptedPassword);
 				
+				Token token = new Token();
 				
-				return foundUser;
-			} 	
-			
-			return null;		
+				token.setToken(jsonToken);
+				
+				entityManager.getTransaction().commit();
+				
+				return Response.ok().entity(token).build();
+			} else {
+				entityManager.getTransaction().commit();
+				
+				return Response.status(Response.Status.NOT_FOUND).entity(WRONG_PASSWORD).build();
+			}
 		}
 		
 		public UserModel getUserById(int id) {
+			entityManager.getTransaction().begin();
+			
 			UserModel foundUser = (UserModel) entityManager.createQuery("SELECT u FROM UserModel u WHERE u.id LIKE :id")
 						 								   .setParameter("id", id)
 						 								   .getSingleResult();
+			entityManager.getTransaction().commit();
 			
 			return foundUser;
 		}
 		
-		private void updateUserToken(int id, String token) {
-			UserModel user = entityManager.find(UserModel.class, id);
+		public int checkIfUserExists(String username) {
+			entityManager.getTransaction().begin();
 			
+			List<UserModel> foundUsers = entityManager.createQuery("SELECT u FROM UserModel u WHERE u.username LIKE :username", UserModel.class)
+					   									   .setParameter("username", username)
+					                                       .getResultList();
+			
+			entityManager.getTransaction().commit();
+			
+			return foundUsers.size();
+		}
+		
+		private void updateUserToken(int id, String token) {
+			UserModel user = getUserById(id);
+			
+			entityManager.getTransaction().begin();
 			
 			user.setToken(token);
 			

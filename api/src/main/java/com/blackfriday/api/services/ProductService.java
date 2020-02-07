@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.ws.rs.core.Response;
 
 import com.blackfriday.api.data.models.ProductModel;
 
@@ -12,16 +13,17 @@ import services.IProductService;
 
 public class ProductService implements IProductService {
 	
-	private IDatabase database;
+	private EntityManager entityManager;
+	
+	private static final String PRODUCT_ADDED_SUCCESSFULLY = "The product was added successfully";
 
 	@Inject
 	public ProductService(IDatabase database) {
-		this.database = database;
+		this.entityManager = database.createEntityManager();
 	}
 
 	@Override
 	public List<ProductModel> getAll() {
-		EntityManager entityManager = this.database.createEntityManager();
 		entityManager.getTransaction().begin();
 		
 		List<ProductModel> products = entityManager.createQuery("from ProductModel", ProductModel.class).getResultList();
@@ -41,7 +43,6 @@ public class ProductService implements IProductService {
 	
 	@Override
 	public ProductModel getProduct(int id) {
-		EntityManager entityManager = this.database.createEntityManager();
 		entityManager.getTransaction().begin();
 		
 		ProductModel product = (ProductModel) entityManager.createQuery("SELECT p FROM ProductModel p WHERE p.id LIKE :id")
@@ -54,23 +55,19 @@ public class ProductService implements IProductService {
 	}
 
 	@Override
-	public String addAProduct(ProductModel product) {
-		EntityManager entityManager = this.database.createEntityManager();
+	public Response addAProduct(ProductModel product) {
 		entityManager.getTransaction().begin();
 		
 		entityManager.persist(product);
 		
 		entityManager.getTransaction().commit();
-		String message = "The product was added successfully" ;
 		
 		
-		return message;
+		return Response.ok().entity(PRODUCT_ADDED_SUCCESSFULLY).build();
 	}
 
 	@Override
 	public String removeAProduct(int id) {
-		// TODO Auto-generated method stub
-		EntityManager entityManager = this.database.createEntityManager();
 		entityManager.getTransaction().begin();
 		
 		entityManager.createQuery("UPDATE ProductModel p SET p.isDeleted = true WHERE p.id LIKE :id").setParameter("id", id).executeUpdate();

@@ -2,6 +2,7 @@ package com.blackfriday.api.services;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashSet;
@@ -47,8 +48,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 		Method method = resourceInfo.getResourceMethod();
 		if (!method.isAnnotationPresent(PermitAll.class)) {
 			if (method.isAnnotationPresent(DenyAll.class)) {
-				request.abortWith(
-						Response.status(Response.Status.FORBIDDEN).entity("Access blocked for all users !!").build());
+				request.abortWith(Response.status(Response.Status.FORBIDDEN).entity("Access blocked for all users !!").build());
 				return;
 			}
 			
@@ -63,8 +63,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 				return;
 			}
 			
-			String authorizationHeader =
-	                request.getHeaderString(HttpHeaders.AUTHORIZATION);
+			String authorizationHeader = request.getHeaderString(HttpHeaders.AUTHORIZATION);
 			
 			if(authorizationHeader.isEmpty() || authorizationHeader == null) {
 				request.abortWith(Response.status(Response.Status.UNAUTHORIZED)
@@ -96,6 +95,11 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 					return;
 				}
 			}
+			
+			List<String> idList = new ArrayList<String>();
+			
+			idList.add(id);
+			headers.put("user_id", idList);
 		}
 	}
 
