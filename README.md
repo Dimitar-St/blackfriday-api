@@ -46,15 +46,18 @@ In persistence.xml file you need to change the properties for user and password 
 
 | Route| Verb| Access|
 | --- | --- | --- |
-|http://localhost:YOUR_PORT/api/webapi/products| GET - returns all products| None|
-|http://localhost:YOUR_PORT/api/webapi/products/{id}| GET - returns one product with provided id| None |
+|http://localhost:YOUR_PORT/api/products| GET - returns all products| None|
+|http://localhost:YOUR_PORT/api/products/{id}| GET - returns one product with provided id| None |
 |http://localhost:YOUR_PORT/api/webapi/products| POST - adds a new product | signed in as Employee |
-|http://localhost:YOUR_PORT/api/webapi/products/{id}|DELETE - deletes a products|signed in as Employee|
-|http://localhost:YOUR_PORT/api/webapi/users|POST - register user|None|
-|http://localhost:YOUR_PORT/api/webapi/user/auth|POST - log in user|None|
+|http://localhost:YOUR_PORT/api/products/{id}|DELETE - deletes a products|signed in as Employee|
+|http://localhost:YOUR_PORT/api/users|POST - register user|None|
+|http://localhost:YOUR_PORT/api/user/auth|POST - log in user|None|
+|http://localhost:YOUR_PORT/api/campaigns | GET - returns all |None|
+|http://localhost:YOUR_PORT/api/campaigns/{id} | GET - returns one campaign |None|
+|http://localhost:YOUR_PORT/api/campaigns | POST - adds campaign | Employee
 
 
-'NOTE:' Postman was used to make requests to this routes. If you have trouble accessing the authrized routes make sure that you are logged in as an employee and copy and passed the provided token into the 'Authorization' tab(as a type choose 'Bearer Token')
+##### NOTE: Use the postman collection to make requests. If you have trouble requesting see the description of the given request.
 
 #### Example product that can be added
 ~~~json
@@ -90,6 +93,16 @@ In persistence.xml file you need to change the properties for user and password 
 	 "username": "anastas",
 	 "password": "123456",
      "role": "employee"
+   }
+~~~
+
+#### Example campaign that can be added
+
+~~~json
+   {
+	"isActive": true,
+    "description": "description",
+    "name": "Black friday 2017"
    }
 ~~~
 
