@@ -4,15 +4,20 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
+
+import com.blackfriday.api.DTOs.CampaignDTO;
+import com.blackfriday.api.DTOs.UserDTO;
 
 @Entity
 @DynamicUpdate
@@ -28,6 +33,8 @@ public class UserModel {
 	private String password;
 	private String image;
 	private String role;
+	
+	@Column(length = 1000)
 	private String token;
 	private int card;
 
@@ -121,5 +128,18 @@ public class UserModel {
 	
 	public void setToken(String token) {
 		this.token = token;
+	}
+	
+	public static UserModel processObject(UserDTO userDto) {
+		UserModel user = new UserModel();
+
+		user.setEmail(userDto.getEmail());
+		user.setPassword(userDto.getPassword());
+		user.setUsername(userDto.getUsername());
+		user.setCard(userDto.getCard());
+		user.setImage(userDto.getImage());
+		user.setRole(userDto.getRole());
+
+		return user;
 	}
 }

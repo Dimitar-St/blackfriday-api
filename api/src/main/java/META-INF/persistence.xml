@@ -3,7 +3,10 @@
 	<persistence-unit name="api">
 		<class>com.blackfriday.api.data.models.ProductModel</class>
 		<class>com.blackfriday.api.data.models.UserModel</class>
+		<class>com.blackfriday.api.data.models.CampaignModel</class>
+		
 		<class>com.blackfriday.api.data.models.BoughtProducts</class>
+		<class>com.blackfriday.api.data.models.CampaignsWithProducts</class>
 	
 		 <properties>
            	<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
@@ -14,7 +17,7 @@
             <!--<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
   			<property name="javax.persistence.schema-generation.database.action" value="create"/>-->
             
-            <!-- For creating database tables -->
+            <!-- For creating databvjase tables -->
             <!--<property name="hibernate.hbm2ddl.auto" value="create"></property>-->
         </properties>
 		

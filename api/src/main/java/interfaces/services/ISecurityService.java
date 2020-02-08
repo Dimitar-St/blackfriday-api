@@ -1,6 +1,6 @@
-package passwordgenerater;
+package services;
 
-public interface IPasswordEncryptionAndDecryptionGenerater {
+public interface ISecurityService {
 	
 	String encrypt(String strToEncrypt, String secret);
 	

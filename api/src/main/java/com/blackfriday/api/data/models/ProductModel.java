@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,9 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
+
+import com.blackfriday.api.DTOs.ProductDTO;
+import com.blackfriday.api.DTOs.UserDTO;
 
 @Entity
 @Table(name = "products")
@@ -37,6 +41,9 @@ public class ProductModel {
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<BoughtProducts> orders;
+	
+	@OneToMany(mappedBy = "campaign", cascade = CascadeType.ALL)
+	private List<CampaignsWithProducts> campaigns;
 
 	public ProductModel() {}
 
@@ -145,5 +152,19 @@ public class ProductModel {
 
 	public void setOrders(List<BoughtProducts> orders) {
 		this.orders = orders;
+	}
+	
+	public static ProductModel processObject(ProductDTO productDto) {
+		ProductModel product = new ProductModel();
+
+		product.setName(productDto.getName());
+		product.setManufacturer(productDto.getManufacturer());
+		product.setMinPrice(productDto.getMinPrice());
+		product.setRegularPrice(productDto.getRegularPrice());
+		product.setDescription(productDto.getDescription());
+		product.setQuantity(productDto.getQuantity());
+		product.setPromotion(productDto.getPromotion());
+		
+		return product;
 	}
 }

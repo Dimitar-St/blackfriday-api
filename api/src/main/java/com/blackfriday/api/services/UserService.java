@@ -10,11 +10,11 @@ import com.blackfriday.api.DTOs.Token;
 import com.blackfriday.api.data.models.UserModel;
 
 import database.IDatabase;
-import passwordgenerater.IPasswordEncryptionAndDecryptionGenerater;
+import services.ISecurityService;
 import services.IUserService;
 
 public class UserService implements IUserService {
-		private IPasswordEncryptionAndDecryptionGenerater securePasswordGenerator;
+		private ISecurityService securityService;
 		private final String secret = "123456";
 		private EntityManager entityManager;
 		
@@ -23,8 +23,8 @@ public class UserService implements IUserService {
 		private static final String WRONG_PASSWORD = "The entered password is incorrect!";
 
 		@Inject
-		public UserService(IDatabase database, IPasswordEncryptionAndDecryptionGenerater securePasswordGenerator) {
-			this.securePasswordGenerator = securePasswordGenerator;
+		public UserService(IDatabase database, ISecurityService securityService) {
+			this.securityService = securityService;
 			this.entityManager = database.createEntityManager();
 		}
 		
@@ -36,7 +36,7 @@ public class UserService implements IUserService {
 			}
 			
 			
-			String passEncryption = this.securePasswordGenerator.encrypt(user.getPassword(), secret);
+			String passEncryption = this.securityService.encrypt(user.getPassword(), secret);
 			
 			user.setPassword(passEncryption);
 			
@@ -57,10 +57,9 @@ public class UserService implements IUserService {
 						 								   .setParameter("username", userToLogIn.getUsername())
 						 								   .getSingleResult();
 			
-			
 			String passedPassword = userToLogIn.getPassword();
 			
-			String decryptedPassword = this.securePasswordGenerator.decrypt(foundUser.getPassword(), secret);
+			String decryptedPassword = this.securityService.decrypt(foundUser.getPassword(), secret);
 			
 			String jsonToken = null;
 			
@@ -90,12 +89,10 @@ public class UserService implements IUserService {
 		}
 		
 		public UserModel getUserById(int id) {
-			entityManager.getTransaction().begin();
 			
 			UserModel foundUser = (UserModel) entityManager.createQuery("SELECT u FROM UserModel u WHERE u.id LIKE :id")
 						 								   .setParameter("id", id)
 						 								   .getSingleResult();
-			entityManager.getTransaction().commit();
 			
 			return foundUser;
 		}
@@ -113,13 +110,9 @@ public class UserService implements IUserService {
 		}
 		
 		private void updateUserToken(int id, String token) {
+			
 			UserModel user = getUserById(id);
 			
-			entityManager.getTransaction().begin();
-			
 			user.setToken(token);
-			
-			entityManager.getTransaction().commit();
-			entityManager.close();
 		}
 }

@@ -6,6 +6,7 @@ import com.blackfriday.api.data.models.UserModel;
 public class UserDTO {
 	
 	private String username;
+	private String password;
 	private String email;
 	private String image;
 	private String role;
@@ -61,5 +62,13 @@ public class UserDTO {
 		userDto.setUsername(user.getUsername());
 		
 		return userDto;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

@@ -26,11 +26,12 @@ import services.IProductService;
 
 @Path("products")
 public class ProductResources {
-	@Inject
+
 	private IProductService productService;
-	
-	@Inject
 	private IBoughtProductsService boughtProductsService;
+	
+	private static final String ORDER_CREATED = "The order created successfully.";
+	private static final String FALIED_TO_MAKE_ORDER = "Failed to make the order!";
 
 	@Inject
 	public ProductResources(IProductService productService, IBoughtProductsService boughtProductsService) {
@@ -44,16 +45,17 @@ public class ProductResources {
 	public Response getAll() {
 		List<ProductModel> products = this.productService.getAll();
 		
-		GenericEntity<List<ProductModel>> entities = new GenericEntity<List<ProductModel>>(products){};
-		
-		return Response.ok(entities).build();
+		return Response.ok().entity(products).build();
 	}
 	
 	@POST
 	@RolesAllowed("employee")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addProduct(ProductModel product) {
+	public Response addProduct(ProductDTO productDto) {
+		
+		ProductModel product = ProductModel.processObject(productDto);
+		
 		Response addProductResponse = this.productService.addAProduct(product);
 		
 		return addProductResponse;
@@ -87,16 +89,12 @@ public class ProductResources {
 	@Path("/{id}/orders")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addNewOrder(@PathParam("id") int productId, @Context HttpHeaders headers) {
-		
-		String message = null;
 		int userId = Integer.parseInt(headers.getRequestHeader("user_id").get(0));
 		
 		boolean isCreated = this.boughtProductsService.order(userId, productId);
 		
-		message = isCreated ? "The order created successfully." : "Failed to make the order!";
-		
-		Response response = isCreated ? Response.ok().entity(message).build() : 
-										Response.serverError().entity(message).build();
+		Response response = isCreated ? Response.ok().entity(ORDER_CREATED).build() : 
+										Response.serverError().entity(FALIED_TO_MAKE_ORDER).build();
 		
 		return response;
 	}

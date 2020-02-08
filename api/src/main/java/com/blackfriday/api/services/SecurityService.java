@@ -20,14 +20,14 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.inject.Singleton;
 
-import passwordgenerater.IPasswordEncryptionAndDecryptionGenerater;
+import services.ISecurityService;
 
 @Singleton
-public class PasswordEncryptionAndDecryptionGenerater implements IPasswordEncryptionAndDecryptionGenerater {
+public class SecurityService implements ISecurityService {
 	private SecretKeySpec secretKey;
 	private byte[] key;
 	
-	public PasswordEncryptionAndDecryptionGenerater() {
+	public SecurityService() {
 		
 	}
 	

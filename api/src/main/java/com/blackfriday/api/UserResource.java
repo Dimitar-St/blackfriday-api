@@ -18,12 +18,14 @@ import com.blackfriday.api.DTOs.Token;
 import com.blackfriday.api.DTOs.UserDTO;
 import com.blackfriday.api.data.models.UserModel;
 
-import passwordgenerater.IPasswordEncryptionAndDecryptionGenerater;
+import services.ISecurityService;
 import services.IUserService;
 
 @Path("users")
 public class UserResource {
 	private IUserService userService;
+	
+	private static final String EMPTY_CREDENTIALS = "Please enter username and password!";
 
 	@Inject
 	public UserResource(IUserService userservice) {
@@ -33,7 +35,13 @@ public class UserResource {
 	@POST
 	@PermitAll
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response register(UserModel user) {	
+	public Response register(UserDTO userDto) {	
+		if(userDto.getUsername().isEmpty() || userDto.getPassword().isEmpty()) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(EMPTY_CREDENTIALS).build();
+		}
+		
+		UserModel user = UserModel.processObject(userDto);
+		
 		Response isCreated = this.userService.register(user);
 
 		return isCreated;
@@ -44,8 +52,15 @@ public class UserResource {
 	@Path("/auth")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response login(UserModel userToLogIn) {
-		Response responseToken = this.userService.login(userToLogIn);
+	public Response login(UserDTO userToLogIn) {
+		
+		if(userToLogIn.getUsername().isEmpty() || userToLogIn.getPassword().isEmpty()) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(EMPTY_CREDENTIALS).build();
+		}
+		
+		UserModel user = UserModel.processObject(userToLogIn);
+		
+		Response responseToken = this.userService.login(user);
 		
 		return responseToken;
 	}

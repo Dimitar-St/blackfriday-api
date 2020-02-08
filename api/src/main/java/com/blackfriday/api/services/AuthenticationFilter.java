@@ -51,7 +51,6 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 				request.abortWith(Response.status(Response.Status.FORBIDDEN).entity("Access blocked for all users !!").build());
 				return;
 			}
-			
 
 			final MultivaluedMap<String, String> headers = request.getHeaders();
 
@@ -71,11 +70,16 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 					   .build());
 			}
 			
-			
 			String id = null;	
-			String token = authorizationHeader.substring(this.AUTHENTICATION_BEARER.length()).trim();
-
-		    id = SecurityToken.validateJwtToken(token);
+			String token = authorizationHeader.substring(AUTHENTICATION_BEARER.length()).trim();
+			
+			try {
+				id = SecurityToken.validateJwtToken(token);
+			} catch(Exception e) {
+				request.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+										  .entity("Invalid token!")
+										  .build());
+			}
 			
 			UserModel user = service.getUserById(Integer.parseInt(id));
 			
