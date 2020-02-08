@@ -1,0 +1,318 @@
+{
+	"info": {
+		"_postman_id": "42f5b433-16e8-4cf7-9c71-c2f6f0e1143b",
+		"name": "black_friday",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "get all products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8181/api/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get one  product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add a product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiJrMSIsImFsZyI6IlJTMjU2In0.eyJpc3MiOiJ0dXRvcmlhbC1hY2FkZW15LmNvbSIsImV4cCI6MTU4MTE3MzY3NywianRpIjoiRDh6dmFBWHlrZWNjVlM0aExnX0xDUSIsImlhdCI6MTU4MTE3MTg3NywibmJmIjoxNTgxMTcxMjc3LCJpZCI6IjEifQ.hq9P64PZlb5-tsMAEj_DM1U1ie0g5v0UmwMwumTks9wVv59uDiPnAltwIPxoRyrsWnarUoJCM7QnQK8c7eEjDFCUbLw-5hdJYwsc9w6feavslyjFp_QPa9s2CZbeumkf5t7stTavxqKPihHP0pDFI94EIQfiCNm6MQbBw_f9k7t92BN3rFyT_I0aym7OZmXkAWY0gYf1CcRog5gBB_MONscL1mrdPwnoTRUknoy82Vnc8Q1FEr9wv-pBJgnGdjDRet9h3UKWa2smEyAQJakK5xSAS37lZSuCxNoTLtwSKsSLiHhODNrKSCTdd3f79xJ6U48wJEzFJBHgO652xh4J-g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"description\": \"no desciprtion\",\r\n        \"id\": 1,\r\n        \"image\": \"no image\",\r\n        \"isDeleted\": false,\r\n        \"manufacturer\": \"Addidas\",\r\n        \"minPrice\": 20,\r\n        \"name\": \"V Super Light\",\r\n        \"orders\": [],\r\n        \"promotion\": 0,\r\n        \"quantity\": 20,\r\n        \"regularPrice\": 25\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8181/api/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"api",
+								"products"
+							]
+						},
+						"description": "To use this route you have to be logged in and to copy and paste the token in the authorization tab (log in to get the token). Change the authorization type to Bearer Token."
+					},
+					"response": []
+				},
+				{
+					"name": "delete product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiJrMSIsImFsZyI6IlJTMjU2In0.eyJpc3MiOiJ0dXRvcmlhbC1hY2FkZW15LmNvbSIsImV4cCI6MTU4MTE3NDYzMiwianRpIjoiaWthVjFyY0lXNk5aUzhBV0tSSzIzdyIsImlhdCI6MTU4MTE3MjgzMiwibmJmIjoxNTgxMTcyMjMyLCJpZCI6IjEifQ.QlpYD2h4So5cW_kf3Ulj1oduXXf1sy-uHDREJrcisaDmm7HlXAJ6M7bWim4ZVpu0K6Kmd2CJgSXq5oR1-aGGJd8LfBN0Fh_jKb-VsR5cstrYbtqT67rb4OgLtI3aoXO1NdTkaT7FFdr1bVKyRtxOAKxlOyMPdUIujI9rQDYGWO5LjIJskP-eLmpDS8DQKZL-Z2-Im1W87COitw6zTt0hf7AntcUYvvm0m0qEjIl9tKZdA38hbD48xtPxNWdigpzn2bZ6JcolcReU0rUIdooaYa36ymSIb1sh9XAfE1AJpH9Fhko85sP_ySAONr9HXRATYaKXYvns9OouoxkWFgWlxA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8181/api/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						},
+						"description": "To use this route you have to be logged in and to copy and paste the token in the authorization tab (log in to get the token). Change the authorization type to Bearer Token."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"dimitar\",\n\t\"password\": \"123456\",\n\t\"role\": \"employee\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8181/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "log in ",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"dimitar\",\n\t\"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8181/api/users/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"api",
+								"users",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "campaigns",
+			"item": [
+				{
+					"name": "get all campaigns",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8181/api/campaigns",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"api",
+								"campaigns"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get one campaign",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"description\",\r\n    \"name\": \"Black friday 2018\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8181/api/campaigns/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"api",
+								"campaigns",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add campaign",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJraWQiOiJrMSIsImFsZyI6IlJTMjU2In0.eyJpc3MiOiJ0dXRvcmlhbC1hY2FkZW15LmNvbSIsImV4cCI6MTU4MTE3NDYzMiwianRpIjoiaWthVjFyY0lXNk5aUzhBV0tSSzIzdyIsImlhdCI6MTU4MTE3MjgzMiwibmJmIjoxNTgxMTcyMjMyLCJpZCI6IjEifQ.QlpYD2h4So5cW_kf3Ulj1oduXXf1sy-uHDREJrcisaDmm7HlXAJ6M7bWim4ZVpu0K6Kmd2CJgSXq5oR1-aGGJd8LfBN0Fh_jKb-VsR5cstrYbtqT67rb4OgLtI3aoXO1NdTkaT7FFdr1bVKyRtxOAKxlOyMPdUIujI9rQDYGWO5LjIJskP-eLmpDS8DQKZL-Z2-Im1W87COitw6zTt0hf7AntcUYvvm0m0qEjIl9tKZdA38hbD48xtPxNWdigpzn2bZ6JcolcReU0rUIdooaYa36ymSIb1sh9XAfE1AJpH9Fhko85sP_ySAONr9HXRATYaKXYvns9OouoxkWFgWlxA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"isActive\": true,\r\n    \"description\": \"description\",\r\n    \"name\": \"Black friday 2017\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8181/api/campaigns",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"api",
+								"campaigns"
+							]
+						},
+						"description": "To use this route you have to be logged in and to copy and paste the token in the authorization tab (log in to get the token). Change the authorization type to Bearer Token."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
