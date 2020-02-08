@@ -60,7 +60,7 @@ public class CampaignResources {
 	@RolesAllowed("employee") 
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addCampagn(CampaignDTO campaignDto) {
+	public Response addCampaign(CampaignDTO campaignDto) {
 		if(campaignDto.getDescription().isEmpty() || campaignDto.getName().isEmpty()) {
 			return Response.status(Response.Status.NOT_ACCEPTABLE).entity(EMPTY_DESCRIPTION_OR_NAME).build();
 		}
