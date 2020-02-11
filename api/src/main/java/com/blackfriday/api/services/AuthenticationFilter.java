@@ -45,6 +45,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 	
 	@Override
 	public void filter(ContainerRequestContext request) throws IOException {
+		
 		Method method = resourceInfo.getResourceMethod();
 		if (!method.isAnnotationPresent(PermitAll.class)) {
 			if (method.isAnnotationPresent(DenyAll.class)) {
