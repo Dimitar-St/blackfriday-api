@@ -46,18 +46,18 @@ In persistence.xml file you need to change the properties for user and password 
 
 | Route| Verb| Access|
 | --- | --- | --- |
-|http://localhost:YOUR_PORT/api/products| GET - returns all products| None|
-|http://localhost:YOUR_PORT/api/products/{id}| GET - returns one product with provided id| None |
-|http://localhost:YOUR_PORT/api/webapi/products| POST - adds a new product | signed in as Employee |
-|http://localhost:YOUR_PORT/api/products/{id}|DELETE - deletes a products|signed in as Employee|
-|http://localhost:YOUR_PORT/api/users|POST - register user|None|
-|http://localhost:YOUR_PORT/api/user/auth|POST - log in user|None|
-|http://localhost:YOUR_PORT/api/campaigns | GET - returns all |None|
-|http://localhost:YOUR_PORT/api/campaigns/{id} | GET - returns one campaign |None|
-|http://localhost:YOUR_PORT/api/campaigns | POST - adds campaign | Employee
+|http://localhost:YOUR_PORT/blackfriday/api/products| GET - returns all products| None|
+|http://localhost:YOUR_PORT/blackfriday/api/products/{id}| GET - returns one product with provided id| None |
+|http://localhost:YOUR_PORT/blackfriday/api/webapi/products| POST - adds a new product | signed in as Employee |
+|http://localhost:YOUR_PORT/blackfriday/api/products/{id}|DELETE - deletes a products|signed in as Employee|
+|http://localhost:YOUR_PORT/blackfriday/api/users|POST - register user|None|
+|http://localhost:YOUR_PORT/blackfriday/api/user/auth|POST - log in user|None|
+|http://localhost:YOUR_PORT/blackfriday/api/campaigns | GET - returns all |None|
+|http://localhost:YOUR_PORT/blackfriday/api/campaigns/{id} | GET - returns one campaign |None|
+|http://localhost:YOUR_PORT/blackfriday/api/campaigns | POST - adds campaign | Employee
 
 
-##### NOTE: Use the postman collection to make requests. If you have trouble requesting see the description of the given request.
+##### NOTE: Use the postman collection to make requests(the new collection will be added soon). If you have trouble requesting see the description of the given request.
 
 #### Example product that can be added
 ~~~json
