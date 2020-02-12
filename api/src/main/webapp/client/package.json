@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "live-server --host=localhost --port=8180"
   },
   "author": "Dimitar",
   "license": "ISC",
   "dependencies": {
     "jquery": "^3.4.1",
     "live-server": "^1.2.1",
+    "mustache": "^4.0.0",
     "noty": "^3.2.0-beta",
     "sammy": "^0.7.6"
   }

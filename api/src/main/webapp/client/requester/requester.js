@@ -26,8 +26,8 @@ class Requester {
                 headers: headers,
                 contentType: type,
                 dataType: 'json',
-                success: function() {
-                    resolve();
+                success: function(data) {
+                    resolve(data);
                 },
                 error: function(error) {
                     reject(error);
@@ -35,6 +35,22 @@ class Requester {
             });
         });
     } 
+    
+    order(url, headers) {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: url,
+                method: 'POST',
+                headers: headers
+            })
+            .done((data) => {
+            	resolve(data);
+            })
+            .fail((error) => {
+            	reject(error);
+            });
+        });
+    }
 }
 
 const requester = new Requester();

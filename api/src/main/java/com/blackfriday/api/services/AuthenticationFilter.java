@@ -38,8 +38,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 	private IUserService service;
 
 	private static final String AUTHORIZATION_PROPERTY = "Authorization";
-	private static final String AUTHENTICATION_SCHEME = "Basic";
-	private static final String AUTHENTICATION_BEARER = "Bearer";
+	private static final String AUTHORIZATION_BEARER = "Bearer";
 	
 
 	
@@ -57,6 +56,8 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
 			final List<String> authorization = headers.get(AUTHORIZATION_PROPERTY);
 
+			System.out.println(headers.get(AUTHORIZATION_PROPERTY));
+			
 			if (authorization == null || authorization.isEmpty()) {
 				request.abortWith(Response.status(Response.Status.UNAUTHORIZED)
 						.entity("You cannot access this resource").build());
@@ -72,7 +73,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 			}
 			
 			String id = null;	
-			String token = authorizationHeader.substring(AUTHENTICATION_BEARER.length()).trim();
+			String token = authorizationHeader.substring(AUTHORIZATION_BEARER.length()).trim();
 			
 			try {
 				id = SecurityToken.validateJwtToken(token);

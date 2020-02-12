@@ -1,0 +1,22 @@
+{{#products}}
+     <div class="container" >
+  <div class="jumbotron">
+    <div class="row">
+      <div class="col-md-6">
+        <h2>{{ name }}</h2>
+        <div class="details">
+          <h4>Description : {{ description }}</h4>
+          <h4>Manufacterer :  {{ manufacturer }} </h4>
+          <h4>Price : {{ regularPrice }} BGN</h4>
+        </div>
+      </div>
+      <div class="pull-right image-container">
+          <img src='https://image.shutterstock.com/image-vector/no-image-available-vector-illustration-260nw-744886198.jpg'>
+      </div>
+      <div class="col-md-4">
+         <button class="btn btn-info"><a class="more-details" href="#/products/{{id}}">More Details . . .</a></button>
+      </div>
+    </div>
+    </div>
+  </div>
+{{/products}}

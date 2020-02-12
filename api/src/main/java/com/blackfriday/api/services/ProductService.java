@@ -78,6 +78,18 @@ public class ProductService implements IProductService {
 		
 		return message;
 	}
+	
+//	public List<ProductModel> getOrders(int id) {
+//		entityManager.getTransaction().begin();
+//		
+//		List<ProductModel> orders = entityManager.createQuery("SELECT BoughtProducts b WHERE b.user_id LIKE :id")
+//												 .setParameter("id", id)
+//												 .getResultList();
+//		
+//		entityManager.getTransaction().commit();
+//		
+//		return orders;
+//	}
 
 	@Override
 	public String modifyAProduct(ProductModel product) {

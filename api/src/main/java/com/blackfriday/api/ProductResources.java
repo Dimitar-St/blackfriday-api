@@ -1,5 +1,6 @@
 package com.blackfriday.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.security.PermitAll;
@@ -45,7 +46,15 @@ public class ProductResources {
 	public Response getAll() {
 		List<ProductModel> products = this.productService.getAll();
 		
-		return Response.ok().entity(products).build();
+		List<ProductDTO> productsDto = new ArrayList<ProductDTO>();
+		
+		for(int i = 0; i < products.size(); i++) {
+			ProductDTO dto = ProductDTO.processDataModel(products.get(i));
+			
+			productsDto.add(dto);
+		}
+		
+		return Response.ok().entity(productsDto).build();
 	}
 	
 	@POST

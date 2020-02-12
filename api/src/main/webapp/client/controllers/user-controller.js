@@ -41,7 +41,7 @@ class User {
             password: $('#password').val()
         }
 
-        requester.post(path, data, 'application/json', {})
+        requester.post(path, data, 'application/json')
                  .then((message) => {
                     notification(message, 'success');
 
@@ -61,19 +61,47 @@ class User {
             password: $('#password').val()
         };
 
-        requester.post(path, data, 'application/json', {})
-                 .then((data) => {
-                    notification('Log in successfully', 'success');
+        requester.post(path, data, 'application/json')
+        .then((data) => {
+           window.localStorage.setItem('token', data.token);
 
-                    window.localStorage.setItem('token', data);
+           sammy.redirect('#/home');
 
-                    sammy.redirect('#/home');
-                 })
-                 .catch((error) => {
-                    notification('Invalid credentials', 'error');
-                    
+           location.reload();
+           notification('Log in successfully', 'success');
+        })
+        .catch((error) => {
+           notification('Something got wrong!!', 'error');
+           
+           console.log(error);
+        });
+    }
+
+    logout(sammy) {
+        window.localStorage.setItem('token', '');
+        sammy.redirect('#/home');
+
+        location.reload();
+    }
+
+    order(sammy) {
+        let id = '/' + sammy.path.split('/')[5],
+            orderPath = API_ENDPOINTS.PRODUCTS + id  + '/orders',
+            authorizatoinHeader = {
+                'Authorization': 'Bearer ' + window.localStorage.getItem('token')
+            };
+
+        requester.order(orderPath, authorizatoinHeader)
+                 .then((response) => {
+                    notification('Ordered', 'success');
+
+                    console.log(response);
+                 }).catch((error) => {
+                    notification(error.statusText, 'warning');
                     console.log(error);
-                 });
+                 }); 
+        
+        sammy.redirect('#/products' + id);
     }
 }
 

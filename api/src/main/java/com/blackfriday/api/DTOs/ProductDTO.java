@@ -3,6 +3,8 @@ package com.blackfriday.api.DTOs;
 import com.blackfriday.api.data.models.ProductModel;
 
 public class ProductDTO {
+	
+	private int id;
 	private String name;
 	private String manufacturer;
 	private String image;
@@ -11,6 +13,14 @@ public class ProductDTO {
 	private int regularPrice;
 	private int promotion;
 	private int quantity;
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public String getName() {
 		return name;
@@ -79,9 +89,9 @@ public class ProductDTO {
 	public static ProductDTO processDataModel(ProductModel product) {
 		ProductDTO productDto = new ProductDTO();
 		
+		productDto.setId(product.getId());
 		productDto.setName(product.getName());
 		productDto.setManufacturer(product.getManufacturer());
-		productDto.setMinPrice(product.getMinPrice());
 		productDto.setRegularPrice(product.getRegularPrice());
 		productDto.setDescription(product.getDescription());
 		productDto.setQuantity(product.getQuantity());

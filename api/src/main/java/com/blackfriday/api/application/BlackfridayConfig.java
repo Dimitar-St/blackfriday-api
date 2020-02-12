@@ -9,6 +9,8 @@ public class BlackfridayConfig extends ResourceConfig {
 		 packages("com.blackfriday.api.application");
 	     register(new BlackfridayApplicationBuilder());  
 	     
-	     register(AuthenticationFilter.class);
+	     //register(CORSResponseFilter.class);
+	     //register(AuthenticationFilter.class);
+	     
 	}
 }
