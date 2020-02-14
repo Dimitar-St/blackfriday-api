@@ -34,7 +34,23 @@ class Requester {
                 }
             });
         });
-    } 
+    }
+    
+    getProfile(url, headers) {
+    	return new Promise((resolve, reject) => {
+            $.ajax({
+                url: url,
+                method: 'GET',
+                headers: headers,
+                success: function(data) {
+                    resolve(data);
+                },
+                error: function(error) {
+                    reject(error);
+                }
+            });
+        })
+    }
     
     order(url, headers) {
         return new Promise((resolve, reject) => {

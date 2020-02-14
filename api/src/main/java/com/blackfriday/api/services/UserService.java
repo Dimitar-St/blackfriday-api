@@ -77,6 +77,7 @@ public class UserService implements IUserService {
 				Token token = new Token();
 				
 				token.setToken(jsonToken);
+				token.setUser_id(foundUser.getId());
 				
 				entityManager.getTransaction().commit();
 				

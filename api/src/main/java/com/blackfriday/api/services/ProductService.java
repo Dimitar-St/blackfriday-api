@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.core.Response;
 
+import com.blackfriday.api.data.models.BoughtProducts;
 import com.blackfriday.api.data.models.ProductModel;
 
 import database.IDatabase;
@@ -82,7 +83,7 @@ public class ProductService implements IProductService {
 //	public List<ProductModel> getOrders(int id) {
 //		entityManager.getTransaction().begin();
 //		
-//		List<ProductModel> orders = entityManager.createQuery("SELECT BoughtProducts b WHERE b.user_id LIKE :id")
+//		List<BoughtProducts> orders = entityManager.createQuery("SELECT BoughtProducts b WHERE b.user_id LIKE :id")
 //												 .setParameter("id", id)
 //												 .getResultList();
 //		

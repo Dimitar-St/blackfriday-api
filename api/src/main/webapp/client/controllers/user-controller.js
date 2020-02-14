@@ -64,6 +64,7 @@ class User {
         requester.post(path, data, 'application/json')
         .then((data) => {
            window.localStorage.setItem('token', data.token);
+           window.localStorage.setItem('user_id', data.user_id);
 
            sammy.redirect('#/home');
 
@@ -79,9 +80,35 @@ class User {
 
     logout(sammy) {
         window.localStorage.setItem('token', '');
+        window.localStorage.setItem('user_id', '');
         sammy.redirect('#/home');
 
         location.reload();
+    }
+    
+    profile(sammy) {
+    	let templatePath = './views/templates/profile.mustache',
+    		id = window.localStorage.getItem('user_id'),
+    		profilePath = API_ENDPOINTS.USERS + '/' + id,
+    		authorizationHeaders = {
+    			'Authorization': 'Bearer ' + window.localStorage.getItem('token')
+    		};
+    	
+    	requester.get(templatePath)
+    			 .then((template) => {
+    				 requester.getProfile(profilePath, authorizationHeaders)
+    				 		  .then((profile) => {
+    				 			  let rendered = Mustache.render(template, { profile: profile });
+    				 			  
+    				 			  $('#content').html(rendered);
+    				 		  })
+    				 		  .catch((error) => {
+    				 			  console.log(error);
+    				 		  });
+    			 });
+    			 
+    	
+    	
     }
 
     order(sammy) {

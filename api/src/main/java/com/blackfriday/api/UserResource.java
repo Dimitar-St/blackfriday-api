@@ -69,11 +69,12 @@ public class UserResource {
 	@GET
 	@Path("/{id}")
 	@RolesAllowed({"employee", "client"})
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response userProfile(@PathParam("id") int userId,  @Context HttpHeaders headers) {
 		
 		int loggedUserId = Integer.parseInt(headers.getRequestHeader("user_id").get(0));
+		
+		
 		
 		if(loggedUserId != userId) {
 			return Response.status(Response.Status.FORBIDDEN).build();

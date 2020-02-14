@@ -85,6 +85,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 			
 			UserModel user = service.getUserById(Integer.parseInt(id));
 			
+			
 			if(!user.getToken().equals(token)) {
 				request.abortWith(Response.status(Response.Status.UNAUTHORIZED)
 					   .entity("Token Expired")

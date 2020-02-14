@@ -5,17 +5,21 @@ import productController from './controllers/product-controller.js';
 let app = $.sammy('#content', function() {
     this.get('#/home', home.loadPage);
 
+    //user
     this.get('#/register', userController.loadRegisterPage);
     this.get('#/login', userController.loadLoginPage);
     this.get('#/logout', userController.logout);
-
+    this.get('#/profile', userController.profile);
+    
     this.post('#/register', userController.register);
     this.post('#/login', userController.login);
+    
 
     // products
     this.get('#/products', productController.loadProductsPage);
     this.get('#/products/:id', productController.loadCurrentProduct);
     
+    //orders
     this.get('#/products/:id/orders', userController.order);
 });
 
