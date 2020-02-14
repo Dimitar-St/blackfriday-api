@@ -60,7 +60,8 @@ In persistence.xml file you need to change the properties for user and password 
 ##### NOTE: Use the postman collection to make requests. If you have trouble requesting see the description of the given request.
 
 ## Client
-    You can access the client with this path http://localhost:YOUR_PORT/blackfriday/client/index.html. Please keep in mind that the client is really buggy better use postman or if you have problems with the server restart it *sometimes that helps XD*.
+
+You can access the client with this path http://localhost:YOUR_PORT/blackfriday/client/index.html. Please keep in mind that the client is really buggy better use postman or if you have problems with the server restart it *sometimes that helps XD*.
 
 
 #### Example product that can be added
