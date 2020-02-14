@@ -14,13 +14,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8181/api/products",
+							"raw": "http://localhost:8181/blackfriday/api/api/products",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8181",
 							"path": [
+								"blackfriday",
+								"api",
 								"api",
 								"products"
 							]
@@ -34,7 +36,18 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "http://localhost:8181/blackfriday/api/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"blackfriday",
+								"api",
+								"products",
+								"1"
+							]
 						}
 					},
 					"response": []
@@ -71,13 +84,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8181/api/products",
+							"raw": "http://localhost:8181/blackfriday/api/products",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8181",
 							"path": [
+								"blackfriday",
 								"api",
 								"products"
 							]
@@ -102,19 +116,53 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8181/api/products/1",
+							"raw": "http://localhost:8181/blackfriday/api/products/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8181",
 							"path": [
+								"blackfriday",
 								"api",
 								"products",
 								"1"
 							]
 						},
 						"description": "To use this route you have to be logged in and to copy and paste the token in the authorization tab (log in to get the token). Change the authorization type to Bearer Token."
+					},
+					"response": []
+				},
+				{
+					"name": "make order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "f",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8181/blackfriday/api/products/2/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"blackfriday",
+								"api",
+								"products",
+								"2",
+								"orders"
+							]
+						}
 					},
 					"response": []
 				}
@@ -146,13 +194,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8181/api/users",
+							"raw": "http://localhost:8181/blackfriday/api/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8181",
 							"path": [
+								"blackfriday",
 								"api",
 								"users"
 							]
@@ -196,6 +245,17 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "user profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -209,13 +269,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8181/api/campaigns",
+							"raw": "http://localhost:8181/blackfriday/api/campaigns",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8181",
 							"path": [
+								"blackfriday",
 								"api",
 								"campaigns"
 							]
@@ -240,7 +301,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"description\": \"description\",\r\n    \"name\": \"Black friday 2018\"\r\n}",
+							"raw": "{\r\n    \"description\": \"description\",\r\n    \"name\": \"Black friday 2017\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -248,13 +309,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8181/api/campaigns/4",
+							"raw": "http://localhost:8181/blackfriday/api/campaigns/4",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8181",
 							"path": [
+								"blackfriday",
 								"api",
 								"campaigns",
 								"4"
@@ -271,7 +333,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJraWQiOiJrMSIsImFsZyI6IlJTMjU2In0.eyJpc3MiOiJ0dXRvcmlhbC1hY2FkZW15LmNvbSIsImV4cCI6MTU4MTE3NDYzMiwianRpIjoiaWthVjFyY0lXNk5aUzhBV0tSSzIzdyIsImlhdCI6MTU4MTE3MjgzMiwibmJmIjoxNTgxMTcyMjMyLCJpZCI6IjEifQ.QlpYD2h4So5cW_kf3Ulj1oduXXf1sy-uHDREJrcisaDmm7HlXAJ6M7bWim4ZVpu0K6Kmd2CJgSXq5oR1-aGGJd8LfBN0Fh_jKb-VsR5cstrYbtqT67rb4OgLtI3aoXO1NdTkaT7FFdr1bVKyRtxOAKxlOyMPdUIujI9rQDYGWO5LjIJskP-eLmpDS8DQKZL-Z2-Im1W87COitw6zTt0hf7AntcUYvvm0m0qEjIl9tKZdA38hbD48xtPxNWdigpzn2bZ6JcolcReU0rUIdooaYa36ymSIb1sh9XAfE1AJpH9Fhko85sP_ySAONr9HXRATYaKXYvns9OouoxkWFgWlxA",
+									"value": "id = SecurityToken.validateJwtToken(token);",
 									"type": "string"
 								}
 							]
@@ -295,13 +357,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8181/api/campaigns",
+							"raw": "http://localhost:8181/blackfriday/api/campaigns",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8181",
 							"path": [
+								"blackfriday",
 								"api",
 								"campaigns"
 							]
