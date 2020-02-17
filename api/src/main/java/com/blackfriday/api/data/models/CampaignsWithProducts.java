@@ -17,7 +17,7 @@ public class CampaignsWithProducts {
 	private int id;
 	
 	@ManyToOne
-	private UserModel user;
+	private ProductModel product;
 	
 	@ManyToOne
 	private CampaignModel campaign;
@@ -32,13 +32,12 @@ public class CampaignsWithProducts {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public UserModel getUser() {
-		return user;
+	public ProductModel getProduct() {
+		return product;
 	}
 
-	public void setUser(UserModel user) {
-		this.user = user;
+	public void setProduct(ProductModel product) {
+		this.product = product;
 	}
 
 	public CampaignModel getCampaign() {

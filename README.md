@@ -46,15 +46,18 @@ In persistence.xml file you need to change the properties for user and password 
 
 | Route| Verb| Access|
 | --- | --- | --- |
-|http://localhost:YOUR_PORT/blackfriday/api/products| GET - returns all products| None|
+|http://localhost:YOUR_PORT/blackfriday/api/products| GET - returns all products| None |
 |http://localhost:YOUR_PORT/blackfriday/api/products/{id}| GET - returns one product with provided id| None |
-|http://localhost:YOUR_PORT/blackfriday/api/webapi/products| POST - adds a new product | signed in as Employee |
-|http://localhost:YOUR_PORT/blackfriday/api/products/{id}|DELETE - deletes a products|signed in as Employee|
-|http://localhost:YOUR_PORT/blackfriday/api/users|POST - register user|None|
-|http://localhost:YOUR_PORT/blackfriday/api/user/auth|POST - log in user|None|
-|http://localhost:YOUR_PORT/blackfriday/api/campaigns | GET - returns all |None|
-|http://localhost:YOUR_PORT/blackfriday/api/campaigns/{id} | GET - returns one campaign |None|
-|http://localhost:YOUR_PORT/blackfriday/api/campaigns | POST - adds campaign | Employee
+|http://localhost:YOUR_PORT/blackfriday/api/products| POST - adds a new product | Employee |
+|http://localhost:YOUR_PORT/blackfriday/api/products/{id}|DELETE - deletes a products| Employee |  
+|http://localhost:8181/blackfriday/api/products/{id}/orders| POST - make an order | Employee/Client |
+|http://localhost:YOUR_PORT/blackfriday/api/users|POST - register user| None |
+|http://localhost:YOUR_PORT/blackfriday/api/users/{id}|GET - user profile | Employee/Client |
+|http://localhost:YOUR_PORT/blackfriday/api/user/auth|POST - log in user| None |
+|http://localhost:YOUR_PORT/blackfriday/api/campaigns | GET - returns all | None |
+|http://localhost:YOUR_PORT/blackfriday/api/campaigns/{id} | GET - returns one campaign | None |
+|http://localhost:YOUR_PORT/blackfriday/api/campaigns | POST - adds campaign | Employee |
+|http://localhost:8181/blackfriday/api/campaigns/product| POST - add a product to a existing campaign | Employee |
 
 
 ##### NOTE: Use the postman collection to make requests. If you have trouble requesting see the description of the given request.

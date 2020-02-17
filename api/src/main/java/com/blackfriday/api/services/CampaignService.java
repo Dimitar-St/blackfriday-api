@@ -22,15 +22,7 @@ public class CampaignService implements ICampaignService {
 		entityManager.getTransaction().begin();
 		
 		List<CampaignModel> campaigns = entityManager.createQuery("SELECT c FROM CampaignModel c WHERE c.isActive = true").getResultList();
-		
-//		for(int i = 0; i < campaigns.size(); i++) {
-//			System.out.println(campaigns.get(i).isActive());
-//			
-//			if(campaigns.get(i).isActive() == false) {
-//				campaigns.remove(i);
-//			}
-//		}
-		
+
 		entityManager.getTransaction().commit();
 		
 		return campaigns;

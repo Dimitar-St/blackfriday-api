@@ -4,6 +4,7 @@ import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 import com.blackfriday.api.database.Database;
 import com.blackfriday.api.services.BoughtProductsService;
+import com.blackfriday.api.services.CampaignProductsService;
 import com.blackfriday.api.services.CampaignService;
 import com.blackfriday.api.services.SecurityService;
 import com.blackfriday.api.services.ProductService;
@@ -12,6 +13,7 @@ import com.blackfriday.api.services.UserService;
 
 import database.IDatabase;
 import services.IBoughtProductsService;
+import services.ICampaignProductsService;
 import services.ICampaignService;
 import services.ISecurityService;
 import services.IProductService;
@@ -27,6 +29,7 @@ public class BlackfridayApplicationBuilder extends AbstractBinder {
 		bind(CampaignService.class).to(ICampaignService.class);
 		bind(BoughtProductsService.class).to(IBoughtProductsService.class);
 		bind(SecurityService.class).to(ISecurityService.class);
+		bind(CampaignProductsService.class).to(ICampaignProductsService.class);
 		
 		
 		//Database
