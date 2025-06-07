@@ -94,7 +94,7 @@
 		</dependency>
 	</dependencies>
 	<properties>
-		<jackson.version>2.8.6</jackson.version>
+		<jackson.version>2.13.0</jackson.version>
 		<jose4jJWT.version>0.7.0</jose4jJWT.version>
 
 		<jersey.version>2.30</jersey.version>
