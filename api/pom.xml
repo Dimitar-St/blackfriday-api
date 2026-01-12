@@ -95,7 +95,7 @@
 	</dependencies>
 	<properties>
 		<jackson.version>2.8.6</jackson.version>
-		<jose4jJWT.version>0.7.0</jose4jJWT.version>
+		<jose4jJWT.version>0.9.5</jose4jJWT.version>
 
 		<jersey.version>2.30</jersey.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
